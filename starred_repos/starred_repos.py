@@ -6,7 +6,7 @@ import time
 from github import Github
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
-from starred_repos.api.get_python_stars import get_api
+from starred_repos.api.get_python_stars import get_api, format_json_to_dicts
 import json
 
 app = Flask(__name__) # create the application instance :)
@@ -60,14 +60,7 @@ def delete_entry(results):
 def add_entry(results):
     """ Insert new repos from API. """
     db = get_db()
-    data_to_insert = [{'repo_id':r.get('id'),
-                        'name':r.get('name'),
-                        'url':r.get('html_url'),
-                        'created_date':r.get('created_at'),
-                        'last_push_date':r.get('pushed_at'),
-                        'description':r.get('description'),
-                        'stars':r.get('watchers'),
-                        'avatar':r.get('owner',{}).get('avatar_url')} for r in results]
+    data_to_insert = format_json_to_dicts(results)
 
     db.executemany("insert into python_repos ( repo_id, name, url, created_date, last_push_date, description, stars, avatar) \
     values (:repo_id, :name, :url, :created_date, :last_push_date, :description, :stars, :avatar)", data_to_insert)

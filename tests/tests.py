@@ -6,7 +6,7 @@ import tempfile
 class RepoTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.db_fd, flaskr.app.config['DATABASE'] = tempfile.mkstemp()
+        self.db_fd, starred_repos.app.config['DATABASE'] = tempfile.mkstemp()
         starred_repos.app.testing = True
         self.app = starred_repos.app.test_client()
         with starred_repos.app.app_context():
@@ -15,6 +15,7 @@ class RepoTestCase(unittest.TestCase):
     def tearDown(self):
         os.close(self.db_fd)
         os.unlink(starred_repos.app.config['DATABASE'])
+
 
 if __name__ == '__main__':
     unittest.main()

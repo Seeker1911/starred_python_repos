@@ -13,3 +13,15 @@ def get_api():
     data_list = data['items']
 
     return data_list
+
+def format_json_to_dicts(results):
+    data = [{'repo_id':r.get('id'),
+                        'name':r.get('name'),
+                        'url':r.get('html_url'),
+                        'created_date':r.get('created_at'),
+                        'last_push_date':r.get('pushed_at'),
+                        'description':r.get('description'),
+                        'stars':r.get('watchers'),
+                        'avatar':r.get('owner',{}).get('avatar_url')} for r in results]
+
+    return data
