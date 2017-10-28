@@ -1,0 +1,9 @@
+MANIFEST.in
+starred_repos/__init__.py
+starred_repos/index.py
+starred_repos/schema.sql
+starred_repos.egg-info/PKG-INFO
+starred_repos.egg-info/SOURCES.txt
+starred_repos.egg-info/dependency_links.txt
+starred_repos.egg-info/requires.txt
+starred_repos.egg-info/top_level.txt

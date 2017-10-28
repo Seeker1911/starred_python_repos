@@ -1,0 +1,3 @@
+graft starred_repos/templates
+graft starred_repos/static
+include starred_repos/schema.sql
