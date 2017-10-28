@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% for repo in info%}
+
+  <br>
+  <table style="font-family:inherit; font-size:inherit; width:100%" >
+      <tr style="background-color:#f3f3f3">
+        <td style="width:50%"><h2>{{repo.name|safe}}</h2></td>
+        <td>{{repo.last_push_date}}</td>
+        <td>{{repo.stars}}</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+            {{ repo.description|safe}}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+            {{ repo.url}}
+        </td>
+      </tr>
+  </table>
+
+
+{% endfor %}
+{% endblock %}

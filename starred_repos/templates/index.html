@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+  <ul class=entries>
+
+  {% for entry in entries %}
+  <li><h2><a href="/info/{{entry.repo_id|safe}}">{{ entry.name }}</a> &nbsp;{{ entry.stars|safe}}</h2>
+  {% endfor %}
+  </ul>
+{% endblock %}
