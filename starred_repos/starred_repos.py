@@ -21,6 +21,7 @@ app.config.from_envvar('STARRED_REPOS_SETTINGS', silent=True)
 
 @app.route('/')
 def show_entries():
+    """Updates DB with most starred Python repos and displays in view. """
     db = get_db()
     cur = db.execute('select distinct name,repo_id,stars from python_repos order by stars desc')
     entries = cur.fetchall()
@@ -36,6 +37,7 @@ def show_entries():
 
 @app.route('/info/<id>')
 def info(id):
+    """ Shows details of a repo based on repo_id """
     sql = "select distinct name, description, stars, url,last_push_date from python_repos where repo_id="+id
     db = get_db()
     cursor = db.execute(sql)
@@ -44,6 +46,7 @@ def info(id):
 
 
 def delete_entry(results):
+    """ Deletes a record before inserting update. """
     repo_ids = [str(item['id']) for item in  results]
     repo_ids = ",".join(repo_ids)
     sql = "DELETE FROM python_repos where repo_id in (:ids)".replace(":ids",repo_ids)
@@ -54,6 +57,7 @@ def delete_entry(results):
 
 @app.route('/add', methods=['POST'])
 def add_entry(results):
+    """ Insert new repos from API. """
     db = get_db()
     data_to_insert = [{'repo_id':r.get('id'),
                         'name':r.get('name'),
