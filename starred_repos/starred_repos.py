@@ -1,14 +1,14 @@
 import os
 import sqlite3
-# import requests
-# from github import Github
+import requests
+from github import Github
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
-# from starred_repos.api.get_python_stars import get_api, get_repo_name
+from starred_repos.api.get_python_stars import get_api
 import json
+
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , starred_repos.py
-
 # Load default config and override config from an environment variable
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'starred_repos.db'),
@@ -18,6 +18,59 @@ app.config.update(dict(
 ))
 app.config.from_envvar('STARRED_REPOS_SETTINGS', silent=True)
 
+
+@app.route('/')
+def show_entries():
+    db = get_db()
+    cur = db.execute('select distinct name,repo_id,stars from python_repos order by stars desc')
+    entries = cur.fetchall()
+    github = Github()
+    # get api
+    results = get_api()
+
+    # The update operation will consist of deletion and insertion for efficiency
+    delete_entry(results)
+    add_entry(results)
+    # get the repo name
+    return render_template('index.html', entries=entries, github=github)
+
+@app.route('/info/<id>')
+def info(id):
+    sql = "select distinct name, description, stars, url,last_push_date from python_repos where repo_id="+id
+    db = get_db()
+    cursor = db.execute(sql)
+    repo_info = cursor.fetchall()
+    return render_template('repo.html',info=repo_info)
+
+
+def delete_entry(results):
+    repo_ids = [str(item['id']) for item in  results]
+    repo_ids = ",".join(repo_ids)
+    sql = "DELETE FROM python_repos where repo_id in (:ids)".replace(":ids",repo_ids)
+    db = get_db()
+    cursor = db.execute(sql)
+    db.commit()
+
+
+@app.route('/add', methods=['POST'])
+def add_entry(results):
+    db = get_db()
+    data_to_insert = [{'repo_id':r.get('id'),
+                        'name':r.get('name'),
+                        'url':r.get('html_url'),
+                        'created_date':r.get('created_at'),
+                        'last_push_date':r.get('pushed_at'),
+                        'description':r.get('description'),
+                        'stars':r.get('watchers')} for r in results]
+
+    db.executemany("insert into python_repos ( repo_id, name, url, created_date, last_push_date, description, stars) \
+    values (:repo_id, :name, :url, :created_date, :last_push_date, :description, :stars)", data_to_insert)
+
+    db.commit()
+    flash('New posts updated')
+    return redirect(url_for('show_entries'))
+
+# Database helpers
 def init_db():
     db = get_db()
     with app.open_resource('schema.sql', mode='r') as f:
@@ -29,7 +82,7 @@ def initdb_command():
     """Initializes the database."""
     init_db()
     print('Initialized the database.')
-    
+
 def connect_db():
     """Connects to the specific database."""
     rv = sqlite3.connect(app.config['DATABASE'])
