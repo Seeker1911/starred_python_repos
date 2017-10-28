@@ -7,6 +7,7 @@ create table python_repos (
   created_date text,
   last_push_date text,
   description text,
-  stars text
+  stars text,
+  avatar text
 
 );

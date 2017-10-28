@@ -1,6 +1,8 @@
 import os
 import sqlite3
 import requests
+import datetime
+import time
 from github import Github
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
@@ -39,7 +41,7 @@ def show_entries():
 @app.route('/info/<id>')
 def info(id):
     """ Shows details of a repo based on repo_id """
-    sql = "select distinct name, description, stars, url, last_push_date, repo_id, created_date from python_repos where repo_id="+id
+    sql = "select distinct name, description, stars, url, last_push_date, repo_id, created_date, avatar from python_repos where repo_id="+id
     db = get_db()
     cursor = db.execute(sql)
     repo_info = cursor.fetchall()
@@ -66,13 +68,14 @@ def add_entry(results):
                         'created_date':r.get('created_at'),
                         'last_push_date':r.get('pushed_at'),
                         'description':r.get('description'),
-                        'stars':r.get('watchers')} for r in results]
+                        'stars':r.get('watchers'),
+                        'avatar':r.get('owner',{}).get('avatar_url')} for r in results]
 
-    db.executemany("insert into python_repos ( repo_id, name, url, created_date, last_push_date, description, stars) \
-    values (:repo_id, :name, :url, :created_date, :last_push_date, :description, :stars)", data_to_insert)
+    db.executemany("insert into python_repos ( repo_id, name, url, created_date, last_push_date, description, stars, avatar) \
+    values (:repo_id, :name, :url, :created_date, :last_push_date, :description, :stars, :avatar)", data_to_insert)
 
     db.commit()
-    flash('New posts updated')
+    flash('Updated ' + str(time.strftime("%Y-%m-%d %H:%M")))
     return redirect(url_for('show_entries'))
 
 # Database helpers

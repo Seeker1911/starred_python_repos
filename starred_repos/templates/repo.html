@@ -3,30 +3,40 @@
 
 {% for repo in info%}
 
-  <br>
-  <table style="font-family:inherit; font-size:inherit; width:100%" >
-      <tr style="background-color:#f3f3f3">
-        <td style="width:50%"><h2>{{repo.name|safe}}</h2></td>
-        <td>{{repo.last_push_date}}</td>
-        <td>{{repo.stars}}</td>
-      </tr>
-      <tr>
-        <td colspan="3">
-            {{ repo.description|safe}}
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3">
-            {{ repo.url}}
-        </td>
-        <td colspan="3">
-          {{ repo.repo_id}}
-        </td>
-        <td colspan="3">
-          {{ repo.created_date}}
-      </td>
-      </tr>
-  </table>
+<div class="container">
+    <div class="row">
+      <div class="col-xs-4 col-sm-3 col-md-3"></div>
+        <div class="col-xs-4 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src={{repo.avatar}} alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4> {{repo.name|safe}}</h4>
+                        <p>
+                            <i class="custom-glyph glyphicon glyphicon-calendar"></i>Last updated: {{repo.last_push_date}}
+                            <br />
+                            <i class="custom-glyph glyphicon glyphicon-globe"></i><a href={{repo.url}} target='_blank'>URL: {{ repo.url}}</a>
+                            <br />
+                            <i class="custom-glyph glyphicon glyphicon-calendar"></i>Created: {{ repo.created_date}}
+                            <br />
+                            <i class="custom-glyph glyphicon glyphicon-barcode"></i>Repo id: {{ repo.repo_id}}
+                            <br />
+                            <i class="custom-glyph glyphicon glyphicon-star"></i>Star Count: {{ repo.stars}}
+                            <br />
+                            <i class="custom-glyph glyphicon glyphicon-list-alt"></i>{{ repo.description|safe}}
+                        </p>
+                        <div class="btn-group">
+                            <a href="/" class="btn btn-lg btn-info" role="button">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+      <div class="col-xs-4 col-sm-3 col-md-3"></div>
+   </div>
+</div>
 
 
 {% endfor %}
