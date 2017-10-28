@@ -30,11 +30,9 @@ def show_entries():
     github = Github()
     # get api
     results = get_api()
-
     # The update operation will consist of deletion and insertion for efficiency
     delete_entry(results)
     add_entry(results)
-    # get the repo name
     return render_template('index.html', entries=entries, github=github)
 
 
@@ -78,18 +76,19 @@ def add_entry(results):
     flash('Updated ' + str(time.strftime("%Y-%m-%d %H:%M")))
     return redirect(url_for('show_entries'))
 
-# Database helpers
-def init_db():
-    db = get_db()
-    with app.open_resource('schema.sql', mode='r') as f:
-        db.cursor().executescript(f.read())
-    db.commit()
 
+# Database helpers
 @app.cli.command('initdb')
 def initdb_command():
     """Initializes the database."""
     init_db()
     print('Initialized the database.')
+
+def init_db():
+    db = get_db()
+    with app.open_resource('schema.sql', mode='r') as f:
+        db.cursor().executescript(f.read())
+    db.commit()
 
 def connect_db():
     """Connects to the specific database."""
