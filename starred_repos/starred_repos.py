@@ -23,7 +23,7 @@ app.config.from_envvar('STARRED_REPOS_SETTINGS', silent=True)
 def show_entries():
     """Updates DB with most starred Python repos and displays in view. """
     db = get_db()
-    cur = db.execute('select distinct name,repo_id,stars from python_repos order by stars desc')
+    cur = db.execute('select distinct name,repo_id,stars, description from python_repos order by stars desc')
     entries = cur.fetchall()
     github = Github()
     # get api
@@ -35,10 +35,11 @@ def show_entries():
     # get the repo name
     return render_template('index.html', entries=entries, github=github)
 
+
 @app.route('/info/<id>')
 def info(id):
     """ Shows details of a repo based on repo_id """
-    sql = "select distinct name, description, stars, url,last_push_date from python_repos where repo_id="+id
+    sql = "select distinct name, description, stars, url, last_push_date, repo_id, created_date from python_repos where repo_id="+id
     db = get_db()
     cursor = db.execute(sql)
     repo_info = cursor.fetchall()

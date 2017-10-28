@@ -1,9 +1,15 @@
 MANIFEST.in
+setup.cfg
+setup.py
 starred_repos/__init__.py
-starred_repos/index.py
 starred_repos/schema.sql
+starred_repos/starred_repos.py
 starred_repos.egg-info/PKG-INFO
 starred_repos.egg-info/SOURCES.txt
 starred_repos.egg-info/dependency_links.txt
 starred_repos.egg-info/requires.txt
 starred_repos.egg-info/top_level.txt
+starred_repos/static/style.css
+starred_repos/templates/index.html
+starred_repos/templates/layout.html
+starred_repos/templates/repo.html
