@@ -1,10 +1,6 @@
 
 {% extends "layout.html" %}
 {% block body %}
-<!-- <div class="container">
-  <div class="page-header">
-    <h1 id="timeline" class="text-center">Most Popular Python Repositories</h1>
-  </div> -->
   {% for entry in entries %}
   <ul class="timeline">
       {% if loop.index0 % 2 == 0 %}
