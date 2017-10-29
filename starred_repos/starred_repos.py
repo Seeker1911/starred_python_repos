@@ -3,10 +3,16 @@ import sqlite3
 import requests
 import datetime
 import time
+import sys
+import json
+
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
-from starred_repos.api.get_python_stars import get_api, format_json_to_dicts
-import json
+if sys.version_info[0] == 2:
+    from api.get_python_stars import get_api, format_json_to_dicts
+elif sys.version_info[0] == 3:
+    from starred_repos.api.get_python_stars import get_api, format_json_to_dicts
+
 
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , starred_repos.py
