@@ -18,12 +18,12 @@ of the project including a link to the Github page and the avatar.
 
 **How to run it with virtualenv**
 * `$ git clone`
-* `$ cd into root of project starred_python_repos`
+* `$ cd starred_python_repos`
 * `$ virtualenv env`
 * `$ cd env`
 * `$ source bin/activate`
-* `$ pip install -r requirements.txt`
 * `$ cd ../starred_repos`
+* `$ pip install -r requirements.txt`
 * `$ export FLASK_APP=starred_repos.py`
 * `$ flask run`
 
@@ -34,3 +34,11 @@ of the project including a link to the Github page and the avatar.
 * `$ source activate starred_repos`
 * `$ conda list`
 * `$ pip install -r requirements.txt`
+* `$ export FLASK_APP=starred_repos.py`
+* `$ flask run`
+
+**Useful links**
+* virtualenv: https://virtualenv.pypa.io/en/stable/
+* anaconda: https://www.anaconda.com
+* python.org: https://www.python.org
+* Github API: https://developer.github.com/v3/
