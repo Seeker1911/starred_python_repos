@@ -4,7 +4,7 @@
 
 **Architecture**
 ---
-This project is built on Flask with Python 3 and a SQLite3 Database.
+This project is built on Flask with Python 3 and a SQL Database.
   * It uses the Github api.
   * It uses pip as the package manager.
   * It uses CSS and Bootstrap 3 for styling.
