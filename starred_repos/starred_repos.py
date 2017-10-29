@@ -3,7 +3,6 @@ import sqlite3
 import requests
 import datetime
 import time
-from github import Github
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
 from starred_repos.api.get_python_stars import get_api, format_json_to_dicts
@@ -27,13 +26,12 @@ def show_entries():
     db = get_db()
     cur = db.execute('select distinct name,repo_id,stars, description from python_repos order by stars desc')
     entries = cur.fetchall()
-    github = Github()
     # get api
     results = get_api()
     # The update operation will consist of deletion and insertion for efficiency
     delete_entry(results)
     add_entry(results)
-    return render_template('index.html', entries=entries, github=github)
+    return render_template('index.html', entries=entries)
 
 
 @app.route('/info/<id>')
