@@ -22,8 +22,9 @@ of the project including a link to the Github page and the avatar.
 * `$ virtualenv env`
 * `$ cd env`
 * `$ source bin/activate`
-* `$ cd ../starred_repos`
+* `$ cd ..`
 * `$ pip install -r requirements.txt`
+* `$ cd starred_repos`
 * `$ export FLASK_APP=starred_repos.py`
 * `$ flask run`
 
@@ -34,6 +35,7 @@ of the project including a link to the Github page and the avatar.
 * `$ source activate starred_repos`
 * `$ conda list`
 * `$ pip install -r requirements.txt`
+* `$ cd starred_repos`
 * `$ export FLASK_APP=starred_repos.py`
 * `$ flask run`
 

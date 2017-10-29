@@ -1,0 +1,5 @@
+name: starred_repos
+channels:
+- anaconda-fusion
+- defaults
+prefix: ${home}/anaconda3/envs/starred_repos
