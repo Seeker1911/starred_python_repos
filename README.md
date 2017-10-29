@@ -8,7 +8,7 @@ This project is built on Flask with Python 3 and a SQL Database.
   * It uses the Github api.
   * It uses pip as the package manager.
   * It uses CSS and Bootstrap 3 for styling.
-  * It has been tested with with Python versions 2.7 and 3.6.2
+  * It has been tested with Python versions 2.7 and 3.6.2
 
 **What does it do?**
 ---
