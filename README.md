@@ -15,7 +15,6 @@ most popular at the top. Clicking on a repo will show a more detailed view
 of the project including a link to the Github page and the avatar.
 
 **How to run it with virtualenv**
----
 * `$ git clone`
 * `$ cd into root of project starred_python_repos`
 * `$ virtualenv env`
